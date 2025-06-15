@@ -1,0 +1,39 @@
+// Função que calcula a carga total usando o Método dos Momentos
+FUNCTION Metodo_dos_Momentos(Er, Eo, Vo, L, N)
+    Delta = L / N
+
+    // Vetor de posições dos centros dos segmentos
+    FOR i = 0 TO N - 1 DO
+        Y[i] = Delta * (i + 0.5)
+    END FOR
+
+    // Construção da matriz de influência A
+    FOR i = 0 TO N - 1 DO
+        FOR j = 0 TO N - 1 DO
+            IF i ≠ j THEN
+                A[i][j] = Delta / ABS(Y[i] - Y[j])
+            ELSE
+                A[i][j] = 0.0
+            END IF
+        END FOR
+    END FOR
+
+    // Construção do vetor B com os potenciais
+    FOR i = 0 TO N - 1 DO
+        B[i] = 4 * π * Eo * Er * Vo
+    END FOR
+
+    // Solução do sistema linear: A * Rho = B
+    C = INVERSA(A)
+    Rho = MULTIPLICAR(C, B)
+
+    // Cálculo da carga total Q
+    Soma = 0
+    FOR i = 0 TO N - 1 DO
+        Soma = Soma + Rho[i]
+    END FOR
+
+    Q = Soma * Delta
+
+    RETURN Q
+END FUNCTION

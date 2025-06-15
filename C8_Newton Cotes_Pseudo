@@ -1,0 +1,16 @@
+FUNCTION Integracao_NewtonCotes(ff, a, b, n)
+    h = (b - a) / n           // Tamanho de cada subintervalo
+    x = a
+    s = ff(x)                 // Inicializa soma com ff(a)
+
+    FOR i = 0 TO n - 2 DO
+        x = x + h
+        s = s + 2 * ff(x)     // Soma os termos internos multiplicados por 2
+    END FOR
+
+    s = s + ff(b)             // Soma o valor da função no ponto final b
+
+    I_aprox = (b - a) * s / (2 * n)  // Fórmula da regra do trapézio
+
+    RETURN I_aprox
+END FUNCTION

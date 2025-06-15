@@ -1,0 +1,24 @@
+FUNCTION Bisseccao(x1, x2, TOL, iter=16)
+    hp = (x1 + x2) / 2  // Ponto médio entre os valores x1 e x2
+    IF f(x1) * f(x2) > 0 THEN
+        PRINT "Nenhuma raíz encontrada."  // Nenhuma raíz encontrada
+        RETURN
+    END IF
+
+    c = 0  // Contador de iterações
+    ERRO = abs(f(x2) - f(x1))  // Diferença entre os valores de y
+    WHILE ERRO > TOL OR c < iter DO
+        hp = (x1 + x2) / 2.0
+        IF f(hp) = 0 THEN
+            RETURN [hp, c]  // Raíz encontrada, retorna o ponto e as iterações
+        ELSE IF f(x1) * f(hp) < 0 THEN
+            x2 = hp  // Atualiza x2
+            c = c + 1  // Incrementa o contador de iterações
+        ELSE
+            x1 = hp  // Atualiza x1
+        END IF
+        ERRO = abs(f(x2) - f(x1))  // Recalcula o erro
+    END WHILE
+
+    RETURN {"hp": hp, "iteração": c}  // Retorna a raiz e o número de iterações
+END FUNCTION

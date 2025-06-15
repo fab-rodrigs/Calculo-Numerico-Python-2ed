@@ -1,0 +1,25 @@
+// Função principal que realiza a integração adaptativa:
+FUNCTION quadsetp(f, a, b, tol, fa, fc, fb)
+    h = b - a
+    c = (a + b) / 2
+    fd = f((a + c) / 2)
+    fe = f((c + b) / 2)
+
+    // Regra de Simpson com 3 pontos (q1)
+    q1 = (h / 6) * (fa + 4 * fc + fb)
+
+    // Regra de Simpson com 5 pontos (q2) – subdividida
+    q2 = (h / 12) * (fa + 4 * fd + 2 * fc + 4 * fe + fb)
+
+    // Verifica se a diferença entre q1 e q2 está dentro da tolerância
+    IF abs(q2 - q1) <= tol THEN
+        q = q2 + (q2 - q1) / 15     // Correção de erro estimado
+    ELSE
+        // Aplica recursivamente em [a, c] e [c, b]
+        qa = quadsetp(f, a, c, tol, fa, fd, fc)
+        qb = quadsetp(f, c, b, tol, fc, fe, fb)
+        q = qa + qb
+    END IF
+
+    RETURN q
+END FUNCTION

@@ -1,0 +1,40 @@
+FUNCTION Gauss_Seidel(A, b, x, TOL, maxit)  
+    m = tamanho de A  
+    n = tamanho de A[0]  
+    x = vetor de zeros de tamanho m  
+    erro = vetor vazio  
+    k = 0  
+
+    DO WHILE k < maxit  
+        k = k + 1  
+        PRINT "Iteração: ", k  
+
+        FOR r = 0 TO m-1  
+            soma = 0  
+            FOR c = 0 TO n-1  
+                IF c != r THEN  
+                    soma = soma + A[r, c] * x[c]  
+                END IF  
+            END FOR  
+            x[r] = (b[r] - soma) / A[r, r]  
+            PRINT "x[", r, "]: ", x[r]  
+        END FOR  
+
+        erro = vetor vazio  
+        FOR r = 0 TO m-1  
+            soma = 0  
+            FOR c = 0 TO n-1  
+                soma = soma + A[r, c] * x[c]  
+            END FOR  
+            erro[r] = ABS(soma - b[r])  
+            PRINT "Erro em x[", r, "] = ", erro[r]  
+        END FOR  
+
+        IF TODOS(erro <= TOL) THEN  
+            EXIT  
+        END IF  
+    END DO  
+
+    PRINT "Convergência alcançada em ", k, " iterações."  
+    RETURN x  
+END FUNCTION  

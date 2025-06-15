@@ -1,0 +1,29 @@
+FUNCTION LU_Decomposicao(A, b, x)  
+    m = tamanho de A  
+    y = vetor de zeros com tamanho m  
+    x = vetor de zeros com tamanho m  
+    U = A  
+    L = matriz de zeros de tamanho [m, m]  
+
+    // Construção das matrizes L e U  
+    FOR k = 0 TO m-1  
+        FOR r = 0 TO m-1  
+            IF k = r THEN  
+                L[k, r] = 1  
+            END IF  
+            IF k < r THEN  
+                fator = A[r, k] / A[k, k]  
+                L[r, k] = fator  
+                FOR c = 0 TO m-1  
+                    U[r, c] = A[r, c] - (fator * A[k, c])  
+                END FOR  
+            END IF  
+        END FOR  
+    END FOR  
+
+    // Resolução das equações matriciais  
+    y = Resolver_Sistema(L, b)  
+    x = Resolver_Sistema(U, y)  
+
+    RETURN x  
+END FUNCTION  

@@ -1,0 +1,23 @@
+FUNCTION Interpolacao_Lagrange(x, y, xx)
+    n = size of x  // número de amostras
+
+    IF size of y != n THEN
+        PRINT "x e y devem ter o mesmo tamanho"
+        RETURN
+    END IF
+
+    s = 0
+    FOR i = 0 TO n-1 DO
+        product = y[i]
+        FOR j = 0 TO n-1 DO
+            IF i != j THEN
+                product = product * (xx - x[j]) / (x[i] - x[j])
+            END IF
+        END FOR
+        s = s + product
+    END FOR
+
+    PRINT "s = ", s
+
+    RETURN s
+END FUNCTION

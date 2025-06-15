@@ -1,0 +1,24 @@
+FUNCTION Interpolacao_Newton(x, y, xx)
+    n = size of x
+    b = ZERO_MATRIX(n, n)
+
+    FOR i = 0 TO n-1 DO
+        b[i, 0] = y[i]
+    END FOR
+
+    FOR j = 1 TO n-1 DO
+        FOR i = 0 TO n-j DO
+            b[i, j] = (b[i+1, j-1] - b[i, j-1]) / (x[i+j] - x[i])
+        END FOR
+    END FOR
+
+    xt = 1
+    yint = b[0, 0]
+
+    FOR j = 0 TO n-2 DO
+        xt = xt * (xx - x[j])
+        yint = yint + b[0, j+1] * xt
+    END FOR
+
+    RETURN yint
+END FUNCTION

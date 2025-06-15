@@ -1,0 +1,10 @@
+FUNCTION NewtonRaphson(x, maxit=10, TOL=0.0001)
+    a = f(x) / d(x)  // Cálculo inicial de a
+    iter = 0  // Contador de iterações
+    WHILE abs(a) > TOL AND iter < maxit DO
+        a = f(x) / d(x)  // Atualiza o valor de a
+        x = x - a  // Atualiza o valor de x utilizando o método de Newton-Raphson
+        iter = iter + 1  // Incrementa o contador de iterações
+    END WHILE
+    RETURN [x, iter]  // Retorna a raiz e o número de iterações
+END FUNCTION

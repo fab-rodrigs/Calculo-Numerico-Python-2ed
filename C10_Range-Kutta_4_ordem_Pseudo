@@ -1,0 +1,31 @@
+// Loop de integração com o método de Runge-Kutta de 4ª ordem
+WHILE t[it] < tf DO
+
+    // Cálculo de k1
+    k1 = (1 / L) * (V - R * i[it])
+
+    // Cálculo de k2 com valores intermediários
+    tx = t[it] + (1 / 2) * h
+    ix = i[it] + (1 / 2) * k1 * h
+    k2 = (1 / L) * (V - R * ix)
+
+    // Cálculo de k3 com valores intermediários
+    tx = t[it] + (1 / 2) * h
+    ix = i[it] + (1 / 2) * k2 * h
+    k3 = (1 / L) * (V - R * ix)
+
+    // Cálculo de k4 com valores finais
+    tx = t[it] + h
+    ix = i[it] + k3 * h
+    k4 = (1 / L) * (V - R * ix)
+
+    // Atualização da solução i(t) usando média ponderada dos k's
+    i[it + 1] = i[it] + (1 / 6) * (k1 + 2 * k2 + 2 * k3 + k4) * h
+
+    // Atualização do tempo
+    t[it + 1] = t[it] + h
+
+    // Avança o índice
+    it = it + 1
+
+END WHILE

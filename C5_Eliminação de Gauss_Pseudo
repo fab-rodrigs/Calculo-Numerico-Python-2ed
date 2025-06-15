@@ -1,0 +1,30 @@
+FUNCTION GaussEliminacao(A, b, x)  
+    n = tamanho de b  
+    x = vetor de zeros com tamanho n  
+
+    // Eliminação progressiva  
+    FOR k = 0 TO n-2  
+        FOR i = k+1 TO n-1  
+            IF A[i, k] = 0 THEN  
+                CONTINUE  
+            END IF  
+            fator = A[k, k] / A[i, k]  
+            FOR j = k TO n-1  
+                A[i, j] = A[k, j] - A[i, j] * fator  
+            END FOR  
+            b[i] = b[k] - b[i] * fator  
+        END FOR  
+    END FOR  
+
+    // Substituição regressiva  
+    x[n-1] = b[n-1] / A[n-1, n-1]  
+    FOR i = n-2 TO 0 STEP -1  
+        sum_ax = 0  
+        FOR j = i+1 TO n-1  
+            sum_ax = sum_ax + A[i, j] * x[j]  
+        END FOR  
+        x[i] = (b[i] - sum_ax) / A[i, i]  
+    END FOR  
+
+    RETURN x  
+END FUNCTION  

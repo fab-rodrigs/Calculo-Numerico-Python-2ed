@@ -1,0 +1,40 @@
+FUNCTION Ajuste_Curva_Senoidal(t, y, m)
+    n = size of t  // número de amostras
+    w = 2 * pi * 60  // frequência angular
+
+    sy = soma de todos os elementos de y
+    A0 = sy / n
+
+    INICIALIZAR vetores A[0..m] e B[0..m] com zeros
+    INICIALIZAR matrizes f[0..m-1][0..n-1] e ff[0..n-1][0..n-1] com zeros
+
+    // Cálculo dos coeficientes A[k] e B[k]
+    FOR k = 0 TO m DO
+        soma_ycos = 0
+        soma_ysin = 0
+        FOR i = 0 TO n-1 DO
+            soma_ycos = soma_ycos + (y[i] * cos(k * w * t[i]))
+            soma_ysin = soma_ysin + (y[i] * sin(k * w * t[i]))
+        END FOR
+        A[k] = (2 / n) * soma_ycos
+        B[k] = (2 / n) * soma_ysin
+    END FOR
+
+    // Construção das componentes f[k][i]
+    FOR k = 0 TO m-1 DO
+        FOR i = 0 TO n-1 DO
+            f[k][i] = A[k] * cos(k * w * t[i]) + B[k] * sin(k * w * t[i])
+        END FOR
+    END FOR
+
+    // Soma das componentes para formar a curva final
+    FOR i = 0 TO n-1 DO
+        ff[i] = A0 + soma de todos os f[:, i]
+    END FOR
+
+    // Eliminar A[0] e B[0], se necessário para uso posterior
+    REMOVER A[0]
+    REMOVER B[0]
+
+    RETURN ff
+END FUNCTION

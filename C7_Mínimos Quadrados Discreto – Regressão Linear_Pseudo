@@ -1,0 +1,21 @@
+FUNCTION Regressao_Linear(x, y)  
+    n = tamanho de x  
+
+    IF tamanho de y ≠ n THEN  
+        PRINT "x e y devem ter o mesmo tamanho"  
+    END IF  
+
+    sx = SOMA(x)  
+    sy = SOMA(y)  
+    sx2 = SOMA(x * x)  
+    sxy = SOMA(x * y)  
+    sy2 = SOMA(y * y)  
+
+    a[0] = (n * sxy - sx * sy) / (n * sx2 - sx²)  
+    a[1] = sy / n - a[0] * sx / n  
+
+    r2 = ((n * sxy - sx * sy) / (RAIZ(n * sx2 - sx²) * RAIZ(n * sy2 - sy²)))²  
+    r = RAIZ(r2)  
+
+    RETURN a, r  
+END FUNCTION

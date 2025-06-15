@@ -1,0 +1,24 @@
+    DO WHILE TRUE  
+        f1 = 2 * x[0] * le + x[1] * lf - N * I  
+        f2 = -mi * x[0] + 1.8 * (1 - EXP(-x[1] / 40))  
+        F = vetor [f1, f2]  
+
+        J = matriz [[2 * le, lf],  
+                    [-mi, 1.8 * (1 / 40) * EXP(-x[1] / 40)]]  
+
+        dx = RESOLVER_SISTEMA_LINEAR(J, F)  
+        x = x - dx  
+        iter = iter + 1  
+
+        ea = MAX(ABS(dx / x))  
+
+        IF iter >= maxit OR ea <= es THEN  
+            EXIT  
+        END IF  
+
+        PRINT "Com ", iter, " iterações:"  
+        PRINT "x = ", x  
+    END DO  
+
+    RETURN x  
+END FUNCTION  
